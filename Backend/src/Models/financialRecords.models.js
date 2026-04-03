@@ -10,7 +10,7 @@ const financialRecordsSchema = new mongoose.Schema({
     amount : {
         type : Number,
         required : true,
-        min : [0,"can't be negative"],
+        min : [0,"Amount must be a positive number"],
     },
     type : {
         type : String,
@@ -23,7 +23,6 @@ const financialRecordsSchema = new mongoose.Schema({
     },
     date : {
         type : Date,
-        required : true,
         default : Date.now,
     }
     ,
@@ -48,12 +47,12 @@ financialRecordsSchema.index({ user: 1, date: -1 });
 financialRecordsSchema.index({ user: 1, type: 1 });
 financialRecordsSchema.index({ user: 1, category: 1 });
 
-financialRecordSchema.pre(/^find/, function (next) {
-  this.where({ isDeleted: false });
-  next();
-});
+// financialRecordsSchema.pre(/^find/, function (next) {
+//   this.where({ isDeleted: false });
+//   next();
+// });
 
 
-const financialRecordModel = mongoose.Model("Record",financialRecordsSchema);
+const financialRecordModel = mongoose.model("Record",financialRecordsSchema);
 
 module.exports = financialRecordModel;
