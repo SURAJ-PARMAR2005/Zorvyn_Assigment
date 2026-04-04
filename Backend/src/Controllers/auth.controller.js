@@ -103,4 +103,15 @@ async function login(req,res) {
     }
 }
 
-module.exports  = {register,login};
+async function logout(req,res){
+    try {
+    res.clearCookie("token");
+    return res.status(201).json({message: "Logout Successfull"});
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            message : "server error"
+        })
+    }
+}
+module.exports  = {register,login,logout};
