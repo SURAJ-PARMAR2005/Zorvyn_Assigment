@@ -105,6 +105,11 @@ npm run dev or npm start
 ```
 
 Server runs at `http://localhost:3000`
+## Live API
+
+> Base URL: `https://zorvyn-assigment-ly09.onrender.com`
+
+Import the Postman collection and switch the environment to **Finance API - Production** to test the live deployed API directly — no local setup needed.
 
 ---
 
