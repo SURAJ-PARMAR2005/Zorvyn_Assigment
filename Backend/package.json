@@ -5,8 +5,7 @@
   "scripts": {
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev" : "node server.js"
-
+    "dev": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +20,7 @@
     "json-web-token": "^3.2.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.3.3",
+    "morgan": "^1.10.1",
     "nodemon": "^3.1.14"
   }
 }
