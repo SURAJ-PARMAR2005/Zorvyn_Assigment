@@ -2,7 +2,7 @@
   "info": {
     "_postman_id": "eda04fa0-5693-4a55-9dd1-cc4dee593175",
     "name": "YT Backend API Documentation",
-    "description": "# YT Backend API Documentation\n\nA production-ready REST API for a personal finance tracker — **YT Backend**. This API enables users to register, authenticate, manage financial records (income/expenses), and view dashboard analytics.\n\n---\n\n## Base URL\n\n```\n{{base_url}}\n```\n\nSet `base_url` to `http://localhost:3000` for local development.\n\n---\n\n## Authentication\n\nThis API uses **JWT-based cookie authentication**. After a successful login, the server sets an `HttpOnly` cookie named `token`. All protected routes require this cookie to be present.\n\n**Login flow:**\n1. `POST /api/auth/register` — Create a new account\n2. `POST /api/auth/login` — Receive JWT cookie\n3. Include `Cookie: token={{jwt_token}}` header on all subsequent requests\n\nSet the `jwt_token` global variable to your JWT after login.\n\n---\n\n## Roles & Access Control\n\n| Role | Description |\n|------|-------------|\n| `user` | Default role. Can manage their own records and view their dashboard. |\n| `admin` | Full access. Can view all users, update roles and statuses. |\n| `analyst` | Read-only access to analytics and records. |\n| `viewer` | Basic read-only access. |\n\n---\n\n## Global Variables\n\n| Variable | Description | Example |\n|----------|-------------|---------|\n| `base_url` | Base URL of the API server | `http://localhost:3000` |\n| `jwt_token` | JWT token received after login | *(set after login)* |\n\n---\n\n## Folders\n\n| Folder | Description |\n|--------|-------------|\n| **Auth** | Registration, login, logout, and current user endpoints |\n| **Users** | Admin-only user management endpoints |\n| **Records** | CRUD operations for financial records (income/expenses) |\n| **Dashboard** | Analytics: summary, categories, trends, and recent activity |\n\n---\n\n## Common Response Codes\n\n| Code | Meaning |\n|------|---------|\n| `200` | OK — Request succeeded |\n| `201` | Created — Resource successfully created |\n| `400` | Bad Request — Validation error or missing fields |\n| `401` | Unauthorized — Missing or invalid JWT token |\n| `403` | Forbidden — Insufficient permissions for this role |\n| `500` | Internal Server Error — Unexpected server failure |\n\n---\n\n## Endpoint Reference\n\n### Auth\n| Method | Endpoint | Description |\n|--------|----------|-------------|\n| `POST` | `/api/auth/register` | Register a new user |\n| `POST` | `/api/auth/login` | Login and receive JWT cookie |\n| `GET` | `/api/auth/me` | Get currently authenticated user |\n| `POST` | `/api/auth/logout` | Logout and clear JWT cookie |\n\n### Users *(Admin only)*\n| Method | Endpoint | Description |\n|--------|----------|-------------|\n| `GET` | `/api/users/users` | Get all users |\n| `GET` | `/api/users/user/:userId` | Get user by ID |\n| `PATCH` | `/api/users/user/:userId/role` | Update user role |\n| `PATCH` | `/api/users/user/:userId/status` | Update user active status |\n\n### Records\n| Method | Endpoint | Description |\n|--------|----------|-------------|\n| `GET` | `/api/records` | Get all records for authenticated user |\n| `POST` | `/api/records` | Create a new financial record |\n| `GET` | `/api/records/:recordId` | Get a specific record by ID |\n| `PUT` | `/api/records/:recordId` | Update a specific record |\n\n### Dashboard\n| Method | Endpoint | Description |\n|--------|----------|-------------|\n| `GET` | `/api/dashboard/summary` | Get financial summary (income, expense, balance) |\n| `GET` | `/api/dashboard/categories` | Get spending breakdown by category |\n| `GET` | `/api/dashboard/trends/monthly` | Get monthly income/expense trends |\n| `GET` | `/api/dashboard/trends/weekly` | Get weekly income/expense trends |\n| `GET` | `/api/dashboard/recent` | Get most recent financial records |",
+    "description": "# YT Backend API Documentation\n\nA production-ready REST API for a personal finance tracker \u2014 **YT Backend**. This API enables users to register, authenticate, manage financial records (income/expenses), and view dashboard analytics.\n\n---\n\n## Base URL\n\n```\n{{base_url}}\n```\n\nSet `base_url` to `http://localhost:3000` for local development.\n\n---\n\n## Authentication\n\nThis API uses **JWT Bearer token authentication**. After a successful login, the server returns a JWT token in the response body. All protected routes require this token in the `Authorization` header.\n\n**Login flow:**\n1. `POST /api/auth/register` \u2014 Create a new account\n2. `POST /api/auth/login` \u2014 Receive JWT token in response body\n3. Set `Authorization: Bearer {{jwt_token}}` header on all subsequent requests\n\nSet the `jwt_token` environment variable to your JWT after login.\n\n---\n\n## Roles & Access Control\n\n| Role | Description |\n|------|-------------|\n| `admin` | Full access. Can view all users, update roles and statuses. |\n| `analyst` | Read-only access to analytics and records. |\n| `viewer` | Basic read-only access. |\n\n---\n\n## Global Variables\n\n| Variable | Description | Example |\n|----------|-------------|---------|\n| `base_url` | Base URL of the API server | `http://localhost:3000` |\n| `jwt_token` | JWT token received after login | *(set after login)* |\n\n---\n\n## Folders\n\n| Folder | Description |\n|--------|-------------|\n| **Auth** | Registration, login, logout, and current user endpoints |\n| **Users** | Admin-only user management endpoints |\n| **Records** | CRUD operations for financial records (income/expenses) |\n| **Dashboard** | Analytics: summary, categories, trends, and recent activity |\n\n---\n\n## Common Response Codes\n\n| Code | Meaning |\n|------|---------|\n| `200` | OK \u2014 Request succeeded |\n| `201` | Created \u2014 Resource successfully created |\n| `400` | Bad Request \u2014 Validation error or missing fields |\n| `401` | Unauthorized \u2014 Missing or invalid JWT token |\n| `403` | Forbidden \u2014 Insufficient permissions for this role |\n| `500` | Internal Server Error \u2014 Unexpected server failure |\n\n---\n\n## Endpoint Reference\n\n### Auth\n| Method | Endpoint | Description |\n|--------|----------|-------------|\n| `POST` | `/api/auth/register` | Register a new user |\n| `POST` | `/api/auth/login` | Login and receive JWT cookie |\n| `GET` | `/api/auth/me` | Get currently authenticated user |\n| `POST` | `/api/auth/logout` | Logout and clear JWT cookie |\n\n### Users *(Admin only)*\n| Method | Endpoint | Description |\n|--------|----------|-------------|\n| `GET` | `/api/users/users` | Get all users |\n| `GET` | `/api/users/user/:userId` | Get user by ID |\n| `PATCH` | `/api/users/user/:userId/role` | Update user role |\n| `PATCH` | `/api/users/user/:userId/status` | Update user active status |\n\n### Records\n| Method | Endpoint | Description |\n|--------|----------|-------------|\n| `GET` | `/api/records` | Get all records for authenticated user |\n| `POST` | `/api/records` | Create a new financial record |\n| `GET` | `/api/records/:recordId` | Get a specific record by ID |\n| `PUT` | `/api/records/:recordId` | Update a specific record |\n| `DELETE` | `/api/records/:recordId` | Soft delete a record (Admin only) |\n\n### Dashboard\n| Method | Endpoint | Description |\n|--------|----------|-------------|\n| `GET` | `/api/dashboard/summary` | Get financial summary (income, expense, balance) |\n| `GET` | `/api/dashboard/categories` | Get spending breakdown by category |\n| `GET` | `/api/dashboard/trends/monthly` | Get monthly income/expense trends |\n| `GET` | `/api/dashboard/trends/weekly` | Get weekly income/expense trends |\n| `GET` | `/api/dashboard/recent` | Get most recent financial records |",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "43780654",
     "_collection_link": "https://go.postman.co/collection/43780654-eda04fa0-5693-4a55-9dd1-cc4dee593175?source=collection_link"
@@ -17,23 +17,21 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/api/auth/register",
-              "protocol": "http",
+              "raw": "{{base_url}}/api/auth/register",
               "host": [
-                "localhost"
+                "{{base_url}}"
               ],
-              "port": "3000",
               "path": [
                 "api",
                 "auth",
                 "register"
               ]
             },
-            "description": "## Register User\n\nCreates a new user account in the system.\n\n**Access:** Public (no authentication required)\n\n### Request Body\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| name | string | Yes | Full name of the user |\n| email | string | Yes | Valid email address (must be unique) |\n| password | string | Yes | Minimum 8 characters, must include uppercase, number, and special character |\n\n### Notes\n- Email must be unique across the system\n- Password is hashed before storage (bcrypt)\n- On success, the user is created with the default role: `viewer`\n\n### Response Examples\n\n**201 Created**\n```json\n{\n  \"success\": true,\n  \"message\": \"User registered successfully\",\n  \"data\": {\n    \"_id\": \"69cd709ef6d0d02290c9de6e\",\n    \"name\": \"Suraj Sharma\",\n    \"email\": \"suraj.sharma@example.com\",\n    \"role\": \"viewer\",\n    \"status\": \"active\",\n    \"createdAt\": \"2026-04-04T10:00:00.000Z\"\n  }\n}\n```\n\n**400 Bad Request** – Validation error\n```json\n{\n  \"success\": false,\n  \"message\": \"Validation failed\",\n  \"errors\": [\n    { \"field\": \"email\", \"message\": \"Email already in use\" },\n    { \"field\": \"password\", \"message\": \"Password must be at least 8 characters\" }\n  ]\n}\n```\n\n**500 Internal Server Error**\n```json\n{\n  \"success\": false,\n  \"message\": \"Internal server error. Please try again later.\"\n}\n```"
+            "description": "## Register User\n\nCreates a new user account in the system.\n\n**Access:** Public (no authentication required)\n\n### Request Body\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| name | string | Yes | Full name of the user |\n| email | string | Yes | Valid email address (must be unique) |\n| password | string | Yes | Minimum 8 characters, must include uppercase, number, and special character |\n\n### Notes\n- Email must be unique across the system\n- Password is hashed before storage (bcrypt)\n- On success, the user is created with the default role: `viewer`\n\n### Response Examples\n\n**201 Created**\n```json\n{\n  \"success\": true,\n  \"message\": \"User registered successfully\",\n  \"data\": {\n    \"_id\": \"69cd709ef6d0d02290c9de6e\",\n    \"name\": \"Suraj Sharma\",\n    \"email\": \"suraj.sharma@example.com\",\n    \"role\": \"viewer\",\n    \"status\": \"active\",\n    \"createdAt\": \"2026-04-04T10:00:00.000Z\"\n  }\n}\n```\n\n**400 Bad Request** \u2013 Validation error\n```json\n{\n  \"success\": false,\n  \"message\": \"Validation failed\",\n  \"errors\": [\n    { \"field\": \"email\", \"message\": \"Email already in use\" },\n    { \"field\": \"password\", \"message\": \"Password must be at least 8 characters\" }\n  ]\n}\n```\n\n**500 Internal Server Error**\n```json\n{\n  \"success\": false,\n  \"message\": \"Internal server error. Please try again later.\"\n}\n```"
           },
           "response": [
             {
-              "name": "201 Created – User Registered",
+              "name": "201 Created \u2013 User Registered",
               "originalRequest": {
                 "method": "POST",
                 "header": [
@@ -78,7 +76,7 @@
               "body": "{\"success\": true, \"message\": \"User registered successfully\", \"data\": {\"_id\": \"69cd709ef6d0d02290c9de6e\", \"name\": \"Suraj Sharma\", \"email\": \"suraj.sharma@example.com\", \"role\": \"viewer\", \"status\": \"active\", \"createdAt\": \"2026-04-04T10:00:00.000Z\"}}"
             },
             {
-              "name": "400 Bad Request – Validation Error",
+              "name": "400 Bad Request \u2013 Validation Error",
               "originalRequest": {
                 "method": "POST",
                 "header": [
@@ -175,23 +173,21 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/api/auth/login",
-              "protocol": "http",
+              "raw": "{{base_url}}/api/auth/login",
               "host": [
-                "localhost"
+                "{{base_url}}"
               ],
-              "port": "3000",
               "path": [
                 "api",
                 "auth",
                 "login"
               ]
             },
-            "description": "## Login\n\nAuthenticates a user with email and password. On success, a signed JWT is issued and stored in an HTTP-only cookie named `token`.\n\n**Access:** Public (no authentication required)\n\n### Request Body\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| email | string | Yes | Registered email address |\n| password | string | Yes | Account password |\n\n### Notes\n- JWT is stored as an HTTP-only cookie (`token`) — not returned in the response body\n- Cookie expiry: 7 days\n- Use this token for all subsequent authenticated requests\n\n### Response Examples\n\n**200 OK**\n```json\n{\n  \"success\": true,\n  \"message\": \"Login successful\",\n  \"data\": {\n    \"_id\": \"69cd709ef6d0d02290c9de6e\",\n    \"name\": \"Suraj Sharma\",\n    \"email\": \"suraj.sharma@example.com\",\n    \"role\": \"admin\"\n  }\n}\n```\n\n**400 Bad Request** – Missing fields\n```json\n{\n  \"success\": false,\n  \"message\": \"Email and password are required\"\n}\n```\n\n**401 Unauthorized** – Invalid credentials\n```json\n{\n  \"success\": false,\n  \"message\": \"Invalid email or password\"\n}\n```\n\n**500 Internal Server Error**\n```json\n{\n  \"success\": false,\n  \"message\": \"Internal server error. Please try again later.\"\n}\n```"
+            "description": "## Login\n\nAuthenticates a user with email and password. On success, a signed JWT is issued and stored in an HTTP-only cookie named `token`.\n\n**Access:** Public (no authentication required)\n\n### Request Body\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| email | string | Yes | Registered email address |\n| password | string | Yes | Account password |\n\n### Notes\n- JWT is returned in the response body as `token`. Use it as a Bearer token in the Authorization header\n- Cookie expiry: 7 days\n- Use this token for all subsequent authenticated requests\n\n### Response Examples\n\n**200 OK**\n```json\n{\n  \"success\": true,\n  \"message\": \"Login successful\",\n  \"data\": {\n    \"_id\": \"69cd709ef6d0d02290c9de6e\",\n    \"name\": \"Suraj Sharma\",\n    \"email\": \"suraj.sharma@example.com\",\n    \"role\": \"admin\"\n  }\n}\n```\n\n**400 Bad Request** \u2013 Missing fields\n```json\n{\n  \"success\": false,\n  \"message\": \"Email and password are required\"\n}\n```\n\n**401 Unauthorized** \u2013 Invalid credentials\n```json\n{\n  \"success\": false,\n  \"message\": \"Invalid email or password\"\n}\n```\n\n**500 Internal Server Error**\n```json\n{\n  \"success\": false,\n  \"message\": \"Internal server error. Please try again later.\"\n}\n```"
           },
           "response": [
             {
-              "name": "200 OK – Login Successful",
+              "name": "200 OK \u2013 Login Successful",
               "originalRequest": {
                 "method": "POST",
                 "header": [
@@ -236,7 +232,7 @@
               "body": "{\"success\": true, \"message\": \"Login successful\", \"data\": {\"_id\": \"69cd709ef6d0d02290c9de6e\", \"name\": \"Suraj Sharma\", \"email\": \"suraj.sharma@example.com\", \"role\": \"admin\"}}"
             },
             {
-              "name": "400 Bad Request – Missing Fields",
+              "name": "400 Bad Request \u2013 Missing Fields",
               "originalRequest": {
                 "method": "POST",
                 "header": [
@@ -281,7 +277,7 @@
               "body": "{\"success\": false, \"message\": \"Email and password are required\"}"
             },
             {
-              "name": "401 Unauthorized – Invalid Credentials",
+              "name": "401 Unauthorized \u2013 Invalid Credentials",
               "originalRequest": {
                 "method": "POST",
                 "header": [
@@ -378,12 +374,10 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/api/auth/user/:userId",
-              "protocol": "http",
+              "raw": "{{base_url}}/api/auth/user/:userId",
               "host": [
-                "localhost"
+                "{{base_url}}"
               ],
-              "port": "3000",
               "path": [
                 "api",
                 "auth",
@@ -396,17 +390,19 @@
                 }
               ]
             },
-            "description": "## Get Authenticated User\n\nRetrieves the profile of a specific user by their ID. Typically used to fetch the currently logged-in user's details after login.\n\n**Access:** Admin, Analyst, Viewer (authenticated users only — users can only fetch their own profile unless Admin)\n\n### Path Variables\n| Variable | Type | Required | Description |\n|----------|------|----------|-------------|\n| userId | string | Yes | MongoDB ObjectId of the user (e.g., `69cd709ef6d0d02290c9de6e`) |\n\n### Notes\n- Requires a valid JWT cookie (`token`)\n- Non-admin users can only access their own profile\n\n### Response Examples\n\n**200 OK**\n```json\n{\n  \"success\": true,\n  \"data\": {\n    \"_id\": \"69cd709ef6d0d02290c9de6e\",\n    \"name\": \"Suraj Sharma\",\n    \"email\": \"suraj.sharma@example.com\",\n    \"role\": \"admin\",\n    \"status\": \"active\",\n    \"createdAt\": \"2026-04-04T10:00:00.000Z\",\n    \"updatedAt\": \"2026-04-04T12:00:00.000Z\"\n  }\n}\n```\n\n**401 Unauthorized** – Missing or invalid token\n```json\n{\n  \"success\": false,\n  \"message\": \"Authentication required. Please log in.\"\n}\n```\n\n**403 Forbidden** – Accessing another user's profile without Admin role\n```json\n{\n  \"success\": false,\n  \"message\": \"Access denied. You can only view your own profile.\"\n}\n```\n\n**404 Not Found**\n```json\n{\n  \"success\": false,\n  \"message\": \"User not found\"\n}\n```\n\n**500 Internal Server Error**\n```json\n{\n  \"success\": false,\n  \"message\": \"Internal server error. Please try again later.\"\n}\n```"
+            "description": "## Get Authenticated User\n\nRetrieves the profile of a specific user by their ID. Typically used to fetch the currently logged-in user's details after login.\n\n**Access:** Admin, Analyst, Viewer (authenticated users only \u2014 users can only fetch their own profile unless Admin)\n\n### Path Variables\n| Variable | Type | Required | Description |\n|----------|------|----------|-------------|\n| userId | string | Yes | MongoDB ObjectId of the user (e.g., `69cd709ef6d0d02290c9de6e`) |\n\n### Notes\n- Requires a valid JWT Bearer token in the Authorization header\n- Non-admin users can only access their own profile\n\n### Response Examples\n\n**200 OK**\n```json\n{\n  \"success\": true,\n  \"data\": {\n    \"_id\": \"69cd709ef6d0d02290c9de6e\",\n    \"name\": \"Suraj Sharma\",\n    \"email\": \"suraj.sharma@example.com\",\n    \"role\": \"admin\",\n    \"status\": \"active\",\n    \"createdAt\": \"2026-04-04T10:00:00.000Z\",\n    \"updatedAt\": \"2026-04-04T12:00:00.000Z\"\n  }\n}\n```\n\n**401 Unauthorized** \u2013 Missing or invalid token\n```json\n{\n  \"success\": false,\n  \"message\": \"Authentication required. Please log in.\"\n}\n```\n\n**403 Forbidden** \u2013 Accessing another user's profile without Admin role\n```json\n{\n  \"success\": false,\n  \"message\": \"Access denied. You can only view your own profile.\"\n}\n```\n\n**404 Not Found**\n```json\n{\n  \"success\": false,\n  \"message\": \"User not found\"\n}\n```\n\n**500 Internal Server Error**\n```json\n{\n  \"success\": false,\n  \"message\": \"Internal server error. Please try again later.\"\n}\n```"
           },
           "response": [
             {
-              "name": "200 OK – User Profile Retrieved",
+              "name": "200 OK \u2013 User Profile Retrieved",
               "originalRequest": {
                 "method": "GET",
                 "header": [
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -438,8 +434,8 @@
               "_postman_previewlanguage": "json",
               "header": [
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -448,13 +444,15 @@
               "body": "{\"success\": true, \"data\": {\"_id\": \"69cd709ef6d0d02290c9de6e\", \"name\": \"Suraj Sharma\", \"email\": \"suraj.sharma@example.com\", \"role\": \"admin\", \"status\": \"active\", \"createdAt\": \"2026-04-04T10:00:00.000Z\", \"updatedAt\": \"2026-04-04T12:00:00.000Z\"}}"
             },
             {
-              "name": "401 Unauthorized – Missing Token",
+              "name": "401 Unauthorized \u2013 Missing Token",
               "originalRequest": {
                 "method": "GET",
                 "header": [
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -486,8 +484,8 @@
               "_postman_previewlanguage": "json",
               "header": [
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -496,13 +494,15 @@
               "body": "{\"success\": false, \"message\": \"Authentication required. Please log in.\"}"
             },
             {
-              "name": "403 Forbidden – Access Denied",
+              "name": "403 Forbidden \u2013 Access Denied",
               "originalRequest": {
                 "method": "GET",
                 "header": [
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -534,8 +534,8 @@
               "_postman_previewlanguage": "json",
               "header": [
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -544,13 +544,15 @@
               "body": "{\"success\": false, \"message\": \"Access denied. You can only view your own profile.\"}"
             },
             {
-              "name": "404 Not Found – User Not Found",
+              "name": "404 Not Found \u2013 User Not Found",
               "originalRequest": {
                 "method": "GET",
                 "header": [
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -582,8 +584,8 @@
               "_postman_previewlanguage": "json",
               "header": [
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -597,8 +599,10 @@
                 "method": "GET",
                 "header": [
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -630,8 +634,8 @@
               "_postman_previewlanguage": "json",
               "header": [
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -653,29 +657,29 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/api/users/users",
-              "protocol": "http",
+              "raw": "{{base_url}}/api/users/users",
               "host": [
-                "localhost"
+                "{{base_url}}"
               ],
-              "port": "3000",
               "path": [
                 "api",
                 "users",
                 "users"
               ]
             },
-            "description": "## Get All Users\n\nReturns a paginated list of all registered users in the system.\n\n**Access:** Admin only\n\n### Query Parameters\n| Parameter | Type | Required | Default | Description |\n|-----------|------|----------|---------|-------------|\n| page | number | No | 1 | Page number for pagination |\n| limit | number | No | 10 | Number of results per page |\n| role | string | No | — | Filter by role: `admin`, `analyst`, `viewer` |\n| status | string | No | — | Filter by status: `active`, `inactive` |\n\n### Notes\n- Requires Admin role\n- Returns paginated results with metadata\n\n### Response Examples\n\n**200 OK**\n```json\n{\n  \"success\": true,\n  \"data\": {\n    \"users\": [\n      {\n        \"_id\": \"69cd709ef6d0d02290c9de6e\",\n        \"name\": \"Suraj Sharma\",\n        \"email\": \"suraj.sharma@example.com\",\n        \"role\": \"admin\",\n        \"status\": \"active\",\n        \"createdAt\": \"2026-04-04T10:00:00.000Z\"\n      },\n      {\n        \"_id\": \"69ce1b3e09f4a12390c9ab1f\",\n        \"name\": \"Priya Mehta\",\n        \"email\": \"priya.mehta@example.com\",\n        \"role\": \"analyst\",\n        \"status\": \"active\",\n        \"createdAt\": \"2026-04-03T08:30:00.000Z\"\n      }\n    ],\n    \"pagination\": {\n      \"total\": 24,\n      \"page\": 1,\n      \"limit\": 10,\n      \"totalPages\": 3\n    }\n  }\n}\n```\n\n**401 Unauthorized**\n```json\n{\n  \"success\": false,\n  \"message\": \"Authentication required. Please log in.\"\n}\n```\n\n**403 Forbidden** – Non-admin access\n```json\n{\n  \"success\": false,\n  \"message\": \"Access denied. Admin role required.\"\n}\n```\n\n**500 Internal Server Error**\n```json\n{\n  \"success\": false,\n  \"message\": \"Internal server error. Please try again later.\"\n}\n```"
+            "description": "## Get All Users\n\nReturns a paginated list of all registered users in the system.\n\n**Access:** Admin only\n\n### Query Parameters\n| Parameter | Type | Required | Default | Description |\n|-----------|------|----------|---------|-------------|\n| page | number | No | 1 | Page number for pagination |\n| limit | number | No | 10 | Number of results per page |\n| role | string | No | \u2014 | Filter by role: `admin`, `analyst`, `viewer` |\n| status | string | No | \u2014 | Filter by status: `active`, `inactive` |\n\n### Notes\n- Requires Admin role\n- Returns paginated results with metadata\n\n### Response Examples\n\n**200 OK**\n```json\n{\n  \"success\": true,\n  \"data\": {\n    \"users\": [\n      {\n        \"_id\": \"69cd709ef6d0d02290c9de6e\",\n        \"name\": \"Suraj Sharma\",\n        \"email\": \"suraj.sharma@example.com\",\n        \"role\": \"admin\",\n        \"status\": \"active\",\n        \"createdAt\": \"2026-04-04T10:00:00.000Z\"\n      },\n      {\n        \"_id\": \"69ce1b3e09f4a12390c9ab1f\",\n        \"name\": \"Priya Mehta\",\n        \"email\": \"priya.mehta@example.com\",\n        \"role\": \"analyst\",\n        \"status\": \"active\",\n        \"createdAt\": \"2026-04-03T08:30:00.000Z\"\n      }\n    ],\n    \"pagination\": {\n      \"total\": 24,\n      \"page\": 1,\n      \"limit\": 10,\n      \"totalPages\": 3\n    }\n  }\n}\n```\n\n**401 Unauthorized**\n```json\n{\n  \"success\": false,\n  \"message\": \"Authentication required. Please log in.\"\n}\n```\n\n**403 Forbidden** \u2013 Non-admin access\n```json\n{\n  \"success\": false,\n  \"message\": \"Access denied. Admin role required.\"\n}\n```\n\n**500 Internal Server Error**\n```json\n{\n  \"success\": false,\n  \"message\": \"Internal server error. Please try again later.\"\n}\n```"
           },
           "response": [
             {
-              "name": "200 OK – Users List Retrieved",
+              "name": "200 OK \u2013 Users List Retrieved",
               "originalRequest": {
                 "method": "GET",
                 "header": [
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -721,8 +725,8 @@
               "_postman_previewlanguage": "json",
               "header": [
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -731,13 +735,15 @@
               "body": "{\"success\": true, \"data\": {\"users\": [{\"_id\": \"69cd709ef6d0d02290c9de6e\", \"name\": \"Suraj Sharma\", \"email\": \"suraj.sharma@example.com\", \"role\": \"admin\", \"status\": \"active\", \"createdAt\": \"2026-04-04T10:00:00.000Z\"}, {\"_id\": \"69ce1b3e09f4a12390c9ab1f\", \"name\": \"Priya Mehta\", \"email\": \"priya.mehta@example.com\", \"role\": \"analyst\", \"status\": \"active\", \"createdAt\": \"2026-04-03T08:30:00.000Z\"}], \"pagination\": {\"total\": 24, \"page\": 1, \"limit\": 10, \"totalPages\": 3}}}"
             },
             {
-              "name": "401 Unauthorized – Not Logged In",
+              "name": "401 Unauthorized \u2013 Not Logged In",
               "originalRequest": {
                 "method": "GET",
                 "header": [
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -773,8 +779,8 @@
               "_postman_previewlanguage": "json",
               "header": [
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -783,13 +789,15 @@
               "body": "{\"success\": false, \"message\": \"Authentication required. Please log in.\"}"
             },
             {
-              "name": "403 Forbidden – Admin Role Required",
+              "name": "403 Forbidden \u2013 Admin Role Required",
               "originalRequest": {
                 "method": "GET",
                 "header": [
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -825,8 +833,8 @@
               "_postman_previewlanguage": "json",
               "header": [
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -840,8 +848,10 @@
                 "method": "GET",
                 "header": [
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -865,8 +875,8 @@
               "_postman_previewlanguage": "json",
               "header": [
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -882,12 +892,10 @@
             "method": "PUT",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/api/users/user/:userId/role",
-              "protocol": "http",
+              "raw": "{{base_url}}/api/users/user/:userId/role",
               "host": [
-                "localhost"
+                "{{base_url}}"
               ],
-              "port": "3000",
               "path": [
                 "api",
                 "users",
@@ -901,11 +909,11 @@
                 }
               ]
             },
-            "description": "## Update User Role\n\nUpdates the role of a specific user. Only Admins can change user roles.\n\n**Access:** Admin only\n\n### Path Variables\n| Variable | Type | Required | Description |\n|----------|------|----------|-------------|\n| userId | string | Yes | MongoDB ObjectId of the target user |\n\n### Request Body\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| role | string | Yes | New role to assign. Allowed values: `admin`, `analyst`, `viewer` |\n\n### Notes\n- An Admin cannot downgrade their own role\n- Role change takes effect immediately on next request\n\n### Response Examples\n\n**200 OK**\n```json\n{\n  \"success\": true,\n  \"message\": \"User role updated successfully\",\n  \"data\": {\n    \"_id\": \"69ce1b3e09f4a12390c9ab1f\",\n    \"name\": \"Priya Mehta\",\n    \"email\": \"priya.mehta@example.com\",\n    \"role\": \"analyst\",\n    \"status\": \"active\"\n  }\n}\n```\n\n**400 Bad Request** – Invalid role value\n```json\n{\n  \"success\": false,\n  \"message\": \"Invalid role. Allowed values: admin, analyst, viewer\"\n}\n```\n\n**401 Unauthorized**\n```json\n{\n  \"success\": false,\n  \"message\": \"Authentication required. Please log in.\"\n}\n```\n\n**403 Forbidden**\n```json\n{\n  \"success\": false,\n  \"message\": \"Access denied. Admin role required.\"\n}\n```\n\n**404 Not Found**\n```json\n{\n  \"success\": false,\n  \"message\": \"User not found\"\n}\n```\n\n**500 Internal Server Error**\n```json\n{\n  \"success\": false,\n  \"message\": \"Internal server error. Please try again later.\"\n}\n```"
+            "description": "## Update User Role\n\nUpdates the role of a specific user. Only Admins can change user roles.\n\n**Access:** Admin only\n\n### Path Variables\n| Variable | Type | Required | Description |\n|----------|------|----------|-------------|\n| userId | string | Yes | MongoDB ObjectId of the target user |\n\n### Request Body\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| role | string | Yes | New role to assign. Allowed values: `admin`, `analyst`, `viewer` |\n\n### Notes\n- An Admin cannot downgrade their own role\n- Role change takes effect immediately on next request\n\n### Response Examples\n\n**200 OK**\n```json\n{\n  \"success\": true,\n  \"message\": \"User role updated successfully\",\n  \"data\": {\n    \"_id\": \"69ce1b3e09f4a12390c9ab1f\",\n    \"name\": \"Priya Mehta\",\n    \"email\": \"priya.mehta@example.com\",\n    \"role\": \"analyst\",\n    \"status\": \"active\"\n  }\n}\n```\n\n**400 Bad Request** \u2013 Invalid role value\n```json\n{\n  \"success\": false,\n  \"message\": \"Invalid role. Allowed values: admin, analyst, viewer\"\n}\n```\n\n**401 Unauthorized**\n```json\n{\n  \"success\": false,\n  \"message\": \"Authentication required. Please log in.\"\n}\n```\n\n**403 Forbidden**\n```json\n{\n  \"success\": false,\n  \"message\": \"Access denied. Admin role required.\"\n}\n```\n\n**404 Not Found**\n```json\n{\n  \"success\": false,\n  \"message\": \"User not found\"\n}\n```\n\n**500 Internal Server Error**\n```json\n{\n  \"success\": false,\n  \"message\": \"Internal server error. Please try again later.\"\n}\n```"
           },
           "response": [
             {
-              "name": "200 OK – Role Updated",
+              "name": "200 OK \u2013 Role Updated",
               "originalRequest": {
                 "method": "PUT",
                 "header": [
@@ -914,8 +922,10 @@
                     "value": "application/json"
                   },
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -959,8 +969,8 @@
                   "enabled": true
                 },
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -969,7 +979,7 @@
               "body": "{\"success\": true, \"message\": \"User role updated successfully\", \"data\": {\"_id\": \"69ce1b3e09f4a12390c9ab1f\", \"name\": \"Priya Mehta\", \"email\": \"priya.mehta@example.com\", \"role\": \"analyst\", \"status\": \"active\"}}"
             },
             {
-              "name": "400 Bad Request – Invalid Role",
+              "name": "400 Bad Request \u2013 Invalid Role",
               "originalRequest": {
                 "method": "PUT",
                 "header": [
@@ -978,8 +988,10 @@
                     "value": "application/json"
                   },
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -1023,8 +1035,8 @@
                   "enabled": true
                 },
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -1042,8 +1054,10 @@
                     "value": "application/json"
                   },
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -1087,8 +1101,8 @@
                   "enabled": true
                 },
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -1097,7 +1111,7 @@
               "body": "{\"success\": false, \"message\": \"Authentication required. Please log in.\"}"
             },
             {
-              "name": "403 Forbidden – Admin Role Required",
+              "name": "403 Forbidden \u2013 Admin Role Required",
               "originalRequest": {
                 "method": "PUT",
                 "header": [
@@ -1106,8 +1120,10 @@
                     "value": "application/json"
                   },
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -1151,8 +1167,8 @@
                   "enabled": true
                 },
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -1161,7 +1177,7 @@
               "body": "{\"success\": false, \"message\": \"Access denied. Admin role required.\"}"
             },
             {
-              "name": "404 Not Found – User Not Found",
+              "name": "404 Not Found \u2013 User Not Found",
               "originalRequest": {
                 "method": "PUT",
                 "header": [
@@ -1170,8 +1186,10 @@
                     "value": "application/json"
                   },
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -1215,8 +1233,8 @@
                   "enabled": true
                 },
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -1234,8 +1252,10 @@
                     "value": "application/json"
                   },
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -1279,8 +1299,8 @@
                   "enabled": true
                 },
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -1296,12 +1316,10 @@
             "method": "PUT",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/api/users/user/:userId/status",
-              "protocol": "http",
+              "raw": "{{base_url}}/api/users/user/:userId/status",
               "host": [
-                "localhost"
+                "{{base_url}}"
               ],
-              "port": "3000",
               "path": [
                 "api",
                 "users",
@@ -1319,7 +1337,7 @@
           },
           "response": [
             {
-              "name": "200 OK – Status Updated",
+              "name": "200 OK \u2013 Status Updated",
               "originalRequest": {
                 "method": "PUT",
                 "header": [
@@ -1328,8 +1346,10 @@
                     "value": "application/json"
                   },
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -1373,8 +1393,8 @@
                   "enabled": true
                 },
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -1383,7 +1403,7 @@
               "body": "{\"success\": true, \"message\": \"User status updated successfully\", \"data\": {\"_id\": \"69ce1b3e09f4a12390c9ab1f\", \"name\": \"Priya Mehta\", \"email\": \"priya.mehta@example.com\", \"role\": \"analyst\", \"status\": \"inactive\"}}"
             },
             {
-              "name": "400 Bad Request – Invalid Status",
+              "name": "400 Bad Request \u2013 Invalid Status",
               "originalRequest": {
                 "method": "PUT",
                 "header": [
@@ -1392,8 +1412,10 @@
                     "value": "application/json"
                   },
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -1437,8 +1459,8 @@
                   "enabled": true
                 },
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -1456,8 +1478,10 @@
                     "value": "application/json"
                   },
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -1501,8 +1525,8 @@
                   "enabled": true
                 },
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -1511,7 +1535,7 @@
               "body": "{\"success\": false, \"message\": \"Authentication required. Please log in.\"}"
             },
             {
-              "name": "403 Forbidden – Admin Role Required",
+              "name": "403 Forbidden \u2013 Admin Role Required",
               "originalRequest": {
                 "method": "PUT",
                 "header": [
@@ -1520,8 +1544,10 @@
                     "value": "application/json"
                   },
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -1565,8 +1591,8 @@
                   "enabled": true
                 },
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -1575,7 +1601,7 @@
               "body": "{\"success\": false, \"message\": \"Access denied. Admin role required.\"}"
             },
             {
-              "name": "404 Not Found – User Not Found",
+              "name": "404 Not Found \u2013 User Not Found",
               "originalRequest": {
                 "method": "PUT",
                 "header": [
@@ -1584,8 +1610,10 @@
                     "value": "application/json"
                   },
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -1629,8 +1657,8 @@
                   "enabled": true
                 },
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -1648,8 +1676,10 @@
                     "value": "application/json"
                   },
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -1693,8 +1723,8 @@
                   "enabled": true
                 },
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -1716,29 +1746,29 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/api/records/",
-              "protocol": "http",
+              "raw": "{{base_url}}/api/records/",
               "host": [
-                "localhost"
+                "{{base_url}}"
               ],
-              "port": "3000",
               "path": [
                 "api",
                 "records",
                 ""
               ]
             },
-            "description": "## Get All Records\n\nReturns a paginated list of all records. Supports filtering by category and date range.\n\n**Access:** Admin, Analyst, Viewer (all authenticated users)\n\n### Query Parameters\n| Parameter | Type | Required | Default | Description |\n|-----------|------|----------|---------|-------------|\n| page | number | No | 1 | Page number |\n| limit | number | No | 10 | Results per page |\n| category | string | No | — | Filter by category (e.g., `income`, `expense`) |\n| startDate | string | No | — | ISO 8601 date filter start (e.g., `2026-01-01`) |\n| endDate | string | No | — | ISO 8601 date filter end (e.g., `2026-04-04`) |\n\n### Notes\n- Results are sorted by `createdAt` descending by default\n\n### Response Examples\n\n**200 OK**\n```json\n{\n  \"success\": true,\n  \"data\": {\n    \"records\": [\n      {\n        \"_id\": \"69ce74c8f1fd65f7789f5085\",\n        \"title\": \"Monthly Salary\",\n        \"amount\": 75000,\n        \"category\": \"income\",\n        \"description\": \"April salary credit\",\n        \"date\": \"2026-04-01T00:00:00.000Z\",\n        \"createdBy\": \"69cd709ef6d0d02290c9de6e\",\n        \"createdAt\": \"2026-04-04T10:00:00.000Z\"\n      }\n    ],\n    \"pagination\": {\n      \"total\": 58,\n      \"page\": 1,\n      \"limit\": 10,\n      \"totalPages\": 6\n    }\n  }\n}\n```\n\n**401 Unauthorized**\n```json\n{\n  \"success\": false,\n  \"message\": \"Authentication required. Please log in.\"\n}\n```\n\n**500 Internal Server Error**\n```json\n{\n  \"success\": false,\n  \"message\": \"Internal server error. Please try again later.\"\n}\n```"
+            "description": "## Get All Records\n\nReturns a paginated list of all records. Supports filtering by category and date range.\n\n**Access:** Admin, Analyst, Viewer (all authenticated users)\n\n### Query Parameters\n| Parameter | Type | Required | Default | Description |\n|-----------|------|----------|---------|-------------|\n| page | number | No | 1 | Page number |\n| limit | number | No | 10 | Results per page |\n| category | string | No | \u2014 | Filter by category (e.g., `income`, `expense`) |\n| startDate | string | No | \u2014 | ISO 8601 date filter start (e.g., `2026-01-01`) |\n| endDate | string | No | \u2014 | ISO 8601 date filter end (e.g., `2026-04-04`) |\n\n### Notes\n- Results are sorted by `createdAt` descending by default\n\n### Response Examples\n\n**200 OK**\n```json\n{\n  \"success\": true,\n  \"data\": {\n    \"records\": [\n      {\n        \"_id\": \"69ce74c8f1fd65f7789f5085\",\n        \"title\": \"Monthly Salary\",\n        \"amount\": 75000,\n        \"category\": \"income\",\n        \"description\": \"April salary credit\",\n        \"date\": \"2026-04-01T00:00:00.000Z\",\n        \"createdBy\": \"69cd709ef6d0d02290c9de6e\",\n        \"createdAt\": \"2026-04-04T10:00:00.000Z\"\n      }\n    ],\n    \"pagination\": {\n      \"total\": 58,\n      \"page\": 1,\n      \"limit\": 10,\n      \"totalPages\": 6\n    }\n  }\n}\n```\n\n**401 Unauthorized**\n```json\n{\n  \"success\": false,\n  \"message\": \"Authentication required. Please log in.\"\n}\n```\n\n**500 Internal Server Error**\n```json\n{\n  \"success\": false,\n  \"message\": \"Internal server error. Please try again later.\"\n}\n```"
           },
           "response": [
             {
-              "name": "200 OK – Records Retrieved",
+              "name": "200 OK \u2013 Records Retrieved",
               "originalRequest": {
                 "method": "GET",
                 "header": [
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -1788,8 +1818,8 @@
               "_postman_previewlanguage": "json",
               "header": [
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -1803,8 +1833,10 @@
                 "method": "GET",
                 "header": [
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -1827,8 +1859,8 @@
               "_postman_previewlanguage": "json",
               "header": [
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -1842,8 +1874,10 @@
                 "method": "GET",
                 "header": [
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -1866,8 +1900,8 @@
               "_postman_previewlanguage": "json",
               "header": [
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -1883,12 +1917,10 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/api/records/",
-              "protocol": "http",
+              "raw": "{{base_url}}/api/records/",
               "host": [
-                "localhost"
+                "{{base_url}}"
               ],
-              "port": "3000",
               "path": [
                 "api",
                 "records",
@@ -1899,7 +1931,7 @@
           },
           "response": [
             {
-              "name": "201 Created – Record Created",
+              "name": "201 Created \u2013 Record Created",
               "originalRequest": {
                 "method": "POST",
                 "header": [
@@ -1908,8 +1940,10 @@
                     "value": "application/json"
                   },
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -1943,8 +1977,8 @@
                   "enabled": true
                 },
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -1953,7 +1987,7 @@
               "body": "{\"success\": true, \"message\": \"Record created successfully\", \"data\": {\"_id\": \"69ce74c8f1fd65f7789f5085\", \"title\": \"Monthly Salary\", \"amount\": 75000, \"category\": \"income\", \"description\": \"April 2026 salary credit from employer\", \"date\": \"2026-04-01T00:00:00.000Z\", \"createdBy\": \"69cd709ef6d0d02290c9de6e\", \"createdAt\": \"2026-04-04T10:00:00.000Z\"}}"
             },
             {
-              "name": "400 Bad Request – Validation Error",
+              "name": "400 Bad Request \u2013 Validation Error",
               "originalRequest": {
                 "method": "POST",
                 "header": [
@@ -1962,8 +1996,10 @@
                     "value": "application/json"
                   },
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -1997,8 +2033,8 @@
                   "enabled": true
                 },
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -2016,8 +2052,10 @@
                     "value": "application/json"
                   },
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -2051,8 +2089,8 @@
                   "enabled": true
                 },
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -2061,7 +2099,7 @@
               "body": "{\"success\": false, \"message\": \"Authentication required. Please log in.\"}"
             },
             {
-              "name": "403 Forbidden – Viewer Cannot Create",
+              "name": "403 Forbidden \u2013 Viewer Cannot Create",
               "originalRequest": {
                 "method": "POST",
                 "header": [
@@ -2070,8 +2108,10 @@
                     "value": "application/json"
                   },
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -2105,8 +2145,8 @@
                   "enabled": true
                 },
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -2124,8 +2164,10 @@
                     "value": "application/json"
                   },
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -2159,8 +2201,8 @@
                   "enabled": true
                 },
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -2176,12 +2218,10 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/api/records/:recordId",
-              "protocol": "http",
+              "raw": "{{base_url}}/api/records/:recordId",
               "host": [
-                "localhost"
+                "{{base_url}}"
               ],
-              "port": "3000",
               "path": [
                 "api",
                 "records",
@@ -2197,13 +2237,15 @@
           },
           "response": [
             {
-              "name": "200 OK – Record Retrieved",
+              "name": "200 OK \u2013 Record Retrieved",
               "originalRequest": {
                 "method": "GET",
                 "header": [
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -2234,8 +2276,8 @@
               "_postman_previewlanguage": "json",
               "header": [
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -2249,8 +2291,10 @@
                 "method": "GET",
                 "header": [
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -2281,8 +2325,8 @@
               "_postman_previewlanguage": "json",
               "header": [
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -2291,13 +2335,15 @@
               "body": "{\"success\": false, \"message\": \"Authentication required. Please log in.\"}"
             },
             {
-              "name": "404 Not Found – Record Not Found",
+              "name": "404 Not Found \u2013 Record Not Found",
               "originalRequest": {
                 "method": "GET",
                 "header": [
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -2328,8 +2374,8 @@
               "_postman_previewlanguage": "json",
               "header": [
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -2343,8 +2389,10 @@
                 "method": "GET",
                 "header": [
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -2375,8 +2423,8 @@
               "_postman_previewlanguage": "json",
               "header": [
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -2392,12 +2440,10 @@
             "method": "PUT",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/api/records/:recordId",
-              "protocol": "http",
+              "raw": "{{base_url}}/api/records/:recordId",
               "host": [
-                "localhost"
+                "{{base_url}}"
               ],
-              "port": "3000",
               "path": [
                 "api",
                 "records",
@@ -2409,11 +2455,11 @@
                 }
               ]
             },
-            "description": "## Update Record\n\nUpdates an existing record by its ID. All fields are optional — only provided fields will be updated.\n\n**Access:** Admin, Analyst\n\n### Path Variables\n| Variable | Type | Required | Description |\n|----------|------|----------|-------------|\n| recordId | string | Yes | MongoDB ObjectId of the record to update |\n\n### Request Body (all fields optional)\n| Field | Type | Description |\n|-------|------|-------------|\n| title | string | Updated title (max 100 chars) |\n| amount | number | Updated amount (must be positive) |\n| category | string | Updated category: `income`, `expense`, `investment` |\n| description | string | Updated description (max 500 chars) |\n| date | string | Updated date in ISO 8601 format |\n\n### Notes\n- Viewers cannot update records\n- `updatedAt` is automatically set on update\n\n### Response Examples\n\n**200 OK**\n```json\n{\n  \"success\": true,\n  \"message\": \"Record updated successfully\",\n  \"data\": {\n    \"_id\": \"69ce74c8f1fd65f7789f5085\",\n    \"title\": \"Monthly Salary - April 2026\",\n    \"amount\": 80000,\n    \"category\": \"income\",\n    \"description\": \"Updated April 2026 salary after increment\",\n    \"date\": \"2026-04-01T00:00:00.000Z\",\n    \"updatedAt\": \"2026-04-04T14:00:00.000Z\"\n  }\n}\n```\n\n**400 Bad Request**\n```json\n{\n  \"success\": false,\n  \"message\": \"Validation failed\",\n  \"errors\": [\n    { \"field\": \"amount\", \"message\": \"Amount must be a positive number\" }\n  ]\n}\n```\n\n**401 Unauthorized**\n```json\n{\n  \"success\": false,\n  \"message\": \"Authentication required. Please log in.\"\n}\n```\n\n**403 Forbidden**\n```json\n{\n  \"success\": false,\n  \"message\": \"Access denied. Analyst or Admin role required.\"\n}\n```\n\n**404 Not Found**\n```json\n{\n  \"success\": false,\n  \"message\": \"Record not found\"\n}\n```\n\n**500 Internal Server Error**\n```json\n{\n  \"success\": false,\n  \"message\": \"Internal server error. Please try again later.\"\n}\n```"
+            "description": "## Update Record\n\nUpdates an existing record by its ID. All fields are optional \u2014 only provided fields will be updated.\n\n**Access:** Admin, Analyst\n\n### Path Variables\n| Variable | Type | Required | Description |\n|----------|------|----------|-------------|\n| recordId | string | Yes | MongoDB ObjectId of the record to update |\n\n### Request Body (all fields optional)\n| Field | Type | Description |\n|-------|------|-------------|\n| title | string | Updated title (max 100 chars) |\n| amount | number | Updated amount (must be positive) |\n| category | string | Updated category: `income`, `expense`, `investment` |\n| description | string | Updated description (max 500 chars) |\n| date | string | Updated date in ISO 8601 format |\n\n### Notes\n- Viewers cannot update records\n- `updatedAt` is automatically set on update\n\n### Response Examples\n\n**200 OK**\n```json\n{\n  \"success\": true,\n  \"message\": \"Record updated successfully\",\n  \"data\": {\n    \"_id\": \"69ce74c8f1fd65f7789f5085\",\n    \"title\": \"Monthly Salary - April 2026\",\n    \"amount\": 80000,\n    \"category\": \"income\",\n    \"description\": \"Updated April 2026 salary after increment\",\n    \"date\": \"2026-04-01T00:00:00.000Z\",\n    \"updatedAt\": \"2026-04-04T14:00:00.000Z\"\n  }\n}\n```\n\n**400 Bad Request**\n```json\n{\n  \"success\": false,\n  \"message\": \"Validation failed\",\n  \"errors\": [\n    { \"field\": \"amount\", \"message\": \"Amount must be a positive number\" }\n  ]\n}\n```\n\n**401 Unauthorized**\n```json\n{\n  \"success\": false,\n  \"message\": \"Authentication required. Please log in.\"\n}\n```\n\n**403 Forbidden**\n```json\n{\n  \"success\": false,\n  \"message\": \"Access denied. Analyst or Admin role required.\"\n}\n```\n\n**404 Not Found**\n```json\n{\n  \"success\": false,\n  \"message\": \"Record not found\"\n}\n```\n\n**500 Internal Server Error**\n```json\n{\n  \"success\": false,\n  \"message\": \"Internal server error. Please try again later.\"\n}\n```"
           },
           "response": [
             {
-              "name": "200 OK – Record Updated",
+              "name": "200 OK \u2013 Record Updated",
               "originalRequest": {
                 "method": "PUT",
                 "header": [
@@ -2422,8 +2468,10 @@
                     "value": "application/json"
                   },
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -2465,8 +2513,8 @@
                   "enabled": true
                 },
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -2475,7 +2523,7 @@
               "body": "{\"success\": true, \"message\": \"Record updated successfully\", \"data\": {\"_id\": \"69ce74c8f1fd65f7789f5085\", \"title\": \"Monthly Salary - April 2026\", \"amount\": 80000, \"category\": \"income\", \"description\": \"Updated April 2026 salary after increment\", \"date\": \"2026-04-01T00:00:00.000Z\", \"updatedAt\": \"2026-04-04T14:00:00.000Z\"}}"
             },
             {
-              "name": "400 Bad Request – Validation Error",
+              "name": "400 Bad Request \u2013 Validation Error",
               "originalRequest": {
                 "method": "PUT",
                 "header": [
@@ -2484,8 +2532,10 @@
                     "value": "application/json"
                   },
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -2527,8 +2577,8 @@
                   "enabled": true
                 },
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -2546,8 +2596,10 @@
                     "value": "application/json"
                   },
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -2589,8 +2641,8 @@
                   "enabled": true
                 },
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -2599,7 +2651,7 @@
               "body": "{\"success\": false, \"message\": \"Authentication required. Please log in.\"}"
             },
             {
-              "name": "403 Forbidden – Viewer Cannot Update",
+              "name": "403 Forbidden \u2013 Viewer Cannot Update",
               "originalRequest": {
                 "method": "PUT",
                 "header": [
@@ -2608,8 +2660,10 @@
                     "value": "application/json"
                   },
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -2651,8 +2705,8 @@
                   "enabled": true
                 },
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -2670,8 +2724,10 @@
                     "value": "application/json"
                   },
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -2713,8 +2769,251 @@
                   "enabled": true
                 },
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
+                  "description": "",
+                  "enabled": true
+                }
+              ],
+              "cookie": [],
+              "body": "{\"success\": false, \"message\": \"Internal server error. Please try again later.\"}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Record",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/records/:recordId",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "records",
+                ":recordId"
+              ],
+              "variable": [
+                {
+                  "key": "recordId",
+                  "value": "69ce74c8f1fd65f7789f5085",
+                  "enabled": true
+                }
+              ]
+            },
+            "description": "## Delete Record\n\nSoft deletes a financial record by its ID. The record is not permanently removed \u2014 it is marked as deleted and excluded from all future queries.\n\n**Access:** Admin only\n\n### Path Variables\n| Variable | Type | Required | Description |\n|----------|------|----------|--------------|\n| recordId | string | Yes | MongoDB ObjectId of the record to delete |\n\n### Notes\n- Only Admin can delete records\n- Soft delete \u2014 sets `isDeleted: true`, record remains in the database\n- Deleted records are automatically excluded from all GET queries via a Mongoose pre-hook\n- Cannot be undone via the API (recovery requires direct DB access)\n\n### Response Examples\n\n**200 OK**\n```json\n{\n  \"success\": true,\n  \"message\": \"Record deleted successfully\"\n}\n```\n\n**401 Unauthorized**\n```json\n{\n  \"success\": false,\n  \"message\": \"No token provided, access denied\"\n}\n```\n\n**403 Forbidden** \u2013 Non-admin role\n```json\n{\n  \"success\": false,\n  \"message\": \"Access denied. Required role: admin\"\n}\n```\n\n**404 Not Found**\n```json\n{\n  \"success\": false,\n  \"message\": \"Record not found\"\n}\n```\n\n**500 Internal Server Error**\n```json\n{\n  \"success\": false,\n  \"message\": \"Internal server error. Please try again later.\"\n}\n```"
+          },
+          "response": [
+            {
+              "name": "200 OK \u2013 Record Deleted",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/records/:recordId",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "records",
+                    ":recordId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "recordId",
+                      "value": "69ce74c8f1fd65f7789f5085",
+                      "enabled": true
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "description": "",
+                  "enabled": true
+                }
+              ],
+              "cookie": [],
+              "body": "{\"success\": true, \"message\": \"Record deleted successfully\"}"
+            },
+            {
+              "name": "401 Unauthorized \u2013 No Token",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/records/:recordId",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "records",
+                    ":recordId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "recordId",
+                      "value": "69ce74c8f1fd65f7789f5085",
+                      "enabled": true
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "description": "",
+                  "enabled": true
+                }
+              ],
+              "cookie": [],
+              "body": "{\"success\": false, \"message\": \"No token provided, access denied\"}"
+            },
+            {
+              "name": "403 Forbidden \u2013 Admin Only",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/records/:recordId",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "records",
+                    ":recordId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "recordId",
+                      "value": "69ce74c8f1fd65f7789f5085",
+                      "enabled": true
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "description": "",
+                  "enabled": true
+                }
+              ],
+              "cookie": [],
+              "body": "{\"success\": false, \"message\": \"Access denied. Required role: admin\"}"
+            },
+            {
+              "name": "404 Not Found \u2013 Record Not Found",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/records/:recordId",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "records",
+                    ":recordId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "recordId",
+                      "value": "000000000000000000000000",
+                      "enabled": true
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "description": "",
+                  "enabled": true
+                }
+              ],
+              "cookie": [],
+              "body": "{\"success\": false, \"message\": \"Record not found\"}"
+            },
+            {
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/records/:recordId",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "records",
+                    ":recordId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "recordId",
+                      "value": "69ce74c8f1fd65f7789f5085",
+                      "enabled": true
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
                   "description": "",
                   "enabled": true
                 }
@@ -2736,12 +3035,10 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/api/dashboard/summary",
-              "protocol": "http",
+              "raw": "{{base_url}}/api/dashboard/summary",
               "host": [
-                "localhost"
+                "{{base_url}}"
               ],
-              "port": "3000",
               "path": [
                 "api",
                 "dashboard",
@@ -2752,13 +3049,15 @@
           },
           "response": [
             {
-              "name": "200 OK – Summary Retrieved",
+              "name": "200 OK \u2013 Summary Retrieved",
               "originalRequest": {
                 "method": "GET",
                 "header": [
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -2782,8 +3081,8 @@
               "_postman_previewlanguage": "json",
               "header": [
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -2799,12 +3098,10 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/api/dashboard/categories",
-              "protocol": "http",
+              "raw": "{{base_url}}/api/dashboard/categories",
               "host": [
-                "localhost"
+                "{{base_url}}"
               ],
-              "port": "3000",
               "path": [
                 "api",
                 "dashboard",
@@ -2815,13 +3112,15 @@
           },
           "response": [
             {
-              "name": "200 OK – Categories Retrieved",
+              "name": "200 OK \u2013 Categories Retrieved",
               "originalRequest": {
                 "method": "GET",
                 "header": [
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -2845,8 +3144,8 @@
               "_postman_previewlanguage": "json",
               "header": [
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -2862,12 +3161,10 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/api/dashboard/trends/monthly",
-              "protocol": "http",
+              "raw": "{{base_url}}/api/dashboard/trends/monthly",
               "host": [
-                "localhost"
+                "{{base_url}}"
               ],
-              "port": "3000",
               "path": [
                 "api",
                 "dashboard",
@@ -2879,13 +3176,15 @@
           },
           "response": [
             {
-              "name": "200 OK – Monthly Trends Retrieved",
+              "name": "200 OK \u2013 Monthly Trends Retrieved",
               "originalRequest": {
                 "method": "GET",
                 "header": [
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -2917,8 +3216,8 @@
               "_postman_previewlanguage": "json",
               "header": [
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -2934,12 +3233,10 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/api/dashboard/trends/weekly",
-              "protocol": "http",
+              "raw": "{{base_url}}/api/dashboard/trends/weekly",
               "host": [
-                "localhost"
+                "{{base_url}}"
               ],
-              "port": "3000",
               "path": [
                 "api",
                 "dashboard",
@@ -2947,17 +3244,19 @@
                 "weekly"
               ]
             },
-            "description": "## Get Weekly Trends\n\nReturns aggregated financial data grouped by week. Used to render short-term trend charts on the dashboard.\n\n**Access:** Admin, Analyst, Viewer (all authenticated users)\n\n### Query Parameters\n| Parameter | Type | Required | Default | Description |\n|-----------|------|----------|---------|-------------|\n| week | number | No | Current week | ISO week number (1–53) |\n| year | number | No | Current year | Year for the week filter |\n\n### Response Examples\n\n**200 OK**\n```json\n{\n  \"success\": true,\n  \"data\": {\n    \"year\": 2026,\n    \"week\": 14,\n    \"trends\": [\n      { \"day\": \"Monday\", \"income\": 0, \"expense\": 5200, \"investment\": 0 },\n      { \"day\": \"Tuesday\", \"income\": 0, \"expense\": 3100, \"investment\": 5000 },\n      { \"day\": \"Wednesday\", \"income\": 80000, \"expense\": 1200, \"investment\": 0 },\n      { \"day\": \"Thursday\", \"income\": 0, \"expense\": 8700, \"investment\": 0 },\n      { \"day\": \"Friday\", \"income\": 0, \"expense\": 4300, \"investment\": 15000 }\n    ]\n  }\n}\n```\n\n**401 Unauthorized**\n```json\n{\n  \"success\": false,\n  \"message\": \"Authentication required. Please log in.\"\n}\n```\n\n**500 Internal Server Error**\n```json\n{\n  \"success\": false,\n  \"message\": \"Internal server error. Please try again later.\"\n}\n```"
+            "description": "## Get Weekly Trends\n\nReturns aggregated financial data grouped by week. Used to render short-term trend charts on the dashboard.\n\n**Access:** Admin, Analyst, Viewer (all authenticated users)\n\n### Query Parameters\n| Parameter | Type | Required | Default | Description |\n|-----------|------|----------|---------|-------------|\n| week | number | No | Current week | ISO week number (1\u201353) |\n| year | number | No | Current year | Year for the week filter |\n\n### Response Examples\n\n**200 OK**\n```json\n{\n  \"success\": true,\n  \"data\": {\n    \"year\": 2026,\n    \"week\": 14,\n    \"trends\": [\n      { \"day\": \"Monday\", \"income\": 0, \"expense\": 5200, \"investment\": 0 },\n      { \"day\": \"Tuesday\", \"income\": 0, \"expense\": 3100, \"investment\": 5000 },\n      { \"day\": \"Wednesday\", \"income\": 80000, \"expense\": 1200, \"investment\": 0 },\n      { \"day\": \"Thursday\", \"income\": 0, \"expense\": 8700, \"investment\": 0 },\n      { \"day\": \"Friday\", \"income\": 0, \"expense\": 4300, \"investment\": 15000 }\n    ]\n  }\n}\n```\n\n**401 Unauthorized**\n```json\n{\n  \"success\": false,\n  \"message\": \"Authentication required. Please log in.\"\n}\n```\n\n**500 Internal Server Error**\n```json\n{\n  \"success\": false,\n  \"message\": \"Internal server error. Please try again later.\"\n}\n```"
           },
           "response": [
             {
-              "name": "200 OK – Weekly Trends Retrieved",
+              "name": "200 OK \u2013 Weekly Trends Retrieved",
               "originalRequest": {
                 "method": "GET",
                 "header": [
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -2994,8 +3293,8 @@
               "_postman_previewlanguage": "json",
               "header": [
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -3011,12 +3310,10 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/api/dashboard/recent",
-              "protocol": "http",
+              "raw": "{{base_url}}/api/dashboard/recent",
               "host": [
-                "localhost"
+                "{{base_url}}"
               ],
-              "port": "3000",
               "path": [
                 "api",
                 "dashboard",
@@ -3027,13 +3324,15 @@
           },
           "response": [
             {
-              "name": "200 OK – Recent Activity Retrieved",
+              "name": "200 OK \u2013 Recent Activity Retrieved",
               "originalRequest": {
                 "method": "GET",
                 "header": [
                   {
-                    "key": "Cookie",
-                    "value": "token={{jwt_token}}"
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}",
+                    "description": "",
+                    "enabled": true
                   }
                 ],
                 "body": {
@@ -3064,8 +3363,8 @@
               "_postman_previewlanguage": "json",
               "header": [
                 {
-                  "key": "Cookie",
-                  "value": "token={{jwt_token}}",
+                  "key": "Authorization",
+                  "value": "Bearer {{jwt_token}}",
                   "description": "",
                   "enabled": true
                 }
@@ -3077,441 +3376,6 @@
         }
       ],
       "description": "Read-only analytics endpoints for the dashboard. Returns summary metrics, category breakdowns, trend data (monthly/weekly), and recent activity. Accessible by Admin, Analyst, and Viewer roles."
-    },
-    {
-      "name": "Get Recent Activity",
-      "protocolProfileBehavior": {
-        "disableBodyPruning": true
-      },
-      "request": {
-        "auth": {
-          "type": "noauth"
-        },
-        "method": "GET",
-        "header": [
-          {
-            "key": "Cookie",
-            "value": "token={{jwt_token}}",
-            "description": "JWT authentication cookie"
-          },
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"amount\": 45000,\n  \"type\": \"income\",\n  \"category\": \"salary\",\n  \"notes\": \"Updated April 2026 salary after increment\",\n  \"date\": \"2026-04-01\"\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{base_url}}/api/dashboard/recent",
-          "host": [
-            "{{base_url}}"
-          ],
-          "path": [
-            "api",
-            "dashboard",
-            "recent"
-          ],
-          "query": [
-            {
-              "key": "limit",
-              "value": "5",
-              "description": "Number of recent records to return (default: 5, max: 20)"
-            }
-          ]
-        },
-        "description": "Returns the most recent financial records for the authenticated user, ordered by date descending.\n\n**Access:** Authenticated users — requires a valid JWT cookie.\n\n**Query Parameters:**\n\n| Parameter | Type | Required | Description |\n|-----------|------|----------|-------------|\n| `limit` | integer | No | Number of recent records to return. Default: `5`. Max: `20` |\n\n**Request Headers:**\n\n| Header | Value | Description |\n|--------|-------|-------------|\n| `Cookie` | `token={{jwt_token}}` | JWT authentication cookie set on login |\n\n**Success Response (200):** Returns a `count` and array of the most recent records with full record details including `_id`, `user`, `amount`, `type`, `category`, `date`, `notes`, `createdAt`, and `updatedAt`.\n\n**Error Responses:**\n- `400` — Invalid query parameter (e.g. non-integer `limit`)\n- `401` — Not authenticated / JWT token missing or expired\n- `500` — Internal server error"
-      },
-      "response": [
-        {
-          "name": "200 OK - Recent Activity Retrieved",
-          "originalRequest": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Cookie",
-                "value": "token={{jwt_token}}"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"amount\": 45000,\n  \"type\": \"income\",\n  \"category\": \"salary\",\n  \"notes\": \"Updated April 2026 salary after increment\",\n  \"date\": \"2026-04-01\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{base_url}}/api/dashboard/recent?limit=5",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "dashboard",
-                "recent"
-              ],
-              "query": [
-                {
-                  "key": "limit",
-                  "value": "5",
-                  "type": "text"
-                }
-              ]
-            }
-          },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": "json",
-          "header": [
-            {
-              "key": "Cookie",
-              "value": "token={{jwt_token}}",
-              "description": "",
-              "enabled": true
-            },
-            {
-              "key": "Content-Type",
-              "value": "application/json",
-              "description": "",
-              "enabled": true
-            }
-          ],
-          "cookie": [],
-          "body": "{\"count\": 5, \"records\": [{\"_id\": \"69d1516a311fe57313656e7a\", \"user\": \"69ce1b3e095bab1e9882fd71\", \"amount\": 200, \"type\": \"expense\", \"category\": \"food\", \"date\": \"2026-04-04T17:59:06.173Z\", \"notes\": \"Lunch at restaurant\", \"createdAt\": \"2026-04-04T17:59:06.204Z\", \"updatedAt\": \"2026-04-04T17:59:06.204Z\"}, {\"_id\": \"69cf9b038533e9245cc402b7\", \"user\": \"69ce1b3e095bab1e9882fd71\", \"amount\": 2000, \"type\": \"income\", \"category\": \"salary\", \"date\": \"2026-04-03T10:48:35.151Z\", \"notes\": \"Monthly salary\", \"createdAt\": \"2026-04-03T10:48:35.168Z\", \"updatedAt\": \"2026-04-03T10:48:35.168Z\"}, {\"_id\": \"69ce7d132226e8c1c8ab27d1\", \"user\": \"69ce1b3e095bab1e9882fd71\", \"amount\": 10000, \"type\": \"income\", \"category\": \"salary\", \"date\": \"2026-04-02T14:28:35.254Z\", \"notes\": \"Bonus payment\", \"createdAt\": \"2026-04-02T14:28:35.268Z\", \"updatedAt\": \"2026-04-02T14:28:35.268Z\"}, {\"_id\": \"69ce74c8f1fd65f7789f5085\", \"user\": \"69ce1b3e095bab1e9882fd71\", \"amount\": 40000, \"type\": \"income\", \"category\": \"salary\", \"date\": \"2026-04-02T13:53:12.227Z\", \"notes\": \"Annual increment\", \"createdAt\": \"2026-04-02T13:53:12.236Z\", \"updatedAt\": \"2026-04-02T13:53:12.236Z\"}, {\"_id\": \"69ce74c8f1fd65f7789f5086\", \"user\": \"69ce1b3e095bab1e9882fd71\", \"amount\": 500, \"type\": \"expense\", \"category\": \"transport\", \"date\": \"2026-04-01T09:00:00.000Z\", \"notes\": \"Monthly bus pass\", \"createdAt\": \"2026-04-01T09:00:00.000Z\", \"updatedAt\": \"2026-04-01T09:00:00.000Z\"}]}"
-        },
-        {
-          "name": "401 Unauthorized - Invalid or Missing Token",
-          "originalRequest": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Cookie",
-                "value": "token=invalid_or_expired_token"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"amount\": 45000,\n  \"type\": \"income\",\n  \"category\": \"salary\",\n  \"notes\": \"Updated April 2026 salary after increment\",\n  \"date\": \"2026-04-01\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{base_url}}/api/dashboard/recent?limit=5",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "dashboard",
-                "recent"
-              ],
-              "query": [
-                {
-                  "key": "limit",
-                  "value": "5",
-                  "type": "text"
-                }
-              ]
-            }
-          },
-          "status": "Unauthorized",
-          "code": 401,
-          "_postman_previewlanguage": "json",
-          "header": [
-            {
-              "key": "Cookie",
-              "value": "token=invalid_or_expired_token",
-              "description": "",
-              "enabled": true
-            },
-            {
-              "key": "Content-Type",
-              "value": "application/json",
-              "description": "",
-              "enabled": true
-            }
-          ],
-          "cookie": [],
-          "body": "{\"message\": \"Unauthorized. Please login to continue.\"}"
-        },
-        {
-          "name": "500 Internal Server Error",
-          "originalRequest": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Cookie",
-                "value": "token={{jwt_token}}"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"amount\": 45000,\n  \"type\": \"income\",\n  \"category\": \"salary\",\n  \"notes\": \"Updated April 2026 salary after increment\",\n  \"date\": \"2026-04-01\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{base_url}}/api/dashboard/recent?limit=5",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "dashboard",
-                "recent"
-              ],
-              "query": [
-                {
-                  "key": "limit",
-                  "value": "5",
-                  "type": "text"
-                }
-              ]
-            }
-          },
-          "status": "Internal Server Error",
-          "code": 500,
-          "_postman_previewlanguage": "json",
-          "header": [
-            {
-              "key": "Cookie",
-              "value": "token={{jwt_token}}",
-              "description": "",
-              "enabled": true
-            },
-            {
-              "key": "Content-Type",
-              "value": "application/json",
-              "description": "",
-              "enabled": true
-            }
-          ],
-          "cookie": [],
-          "body": "{\"message\": \"Internal server error. Please try again later.\"}"
-        },
-        {
-          "name": "200 OK - Recent Activity Retrieved",
-          "originalRequest": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Cookie",
-                "value": "token={{jwt_token}}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"amount\": 45000,\n  \"type\": \"income\",\n  \"category\": \"salary\",\n  \"notes\": \"Updated April 2026 salary after increment\",\n  \"date\": \"2026-04-01\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{base_url}}/api/dashboard/recent?limit=5",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "dashboard",
-                "recent"
-              ],
-              "query": [
-                {
-                  "key": "limit",
-                  "value": "5",
-                  "type": "text"
-                }
-              ]
-            }
-          },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": "json",
-          "header": [
-            {
-              "key": "Cookie",
-              "value": "token={{jwt_token}}",
-              "description": "",
-              "enabled": true
-            }
-          ],
-          "cookie": [],
-          "body": "{\"count\":5,\"records\":[{\"_id\":\"69d1516a311fe57313656e7a\",\"user\":\"69ce1b3e095bab1e9882fd71\",\"amount\":200,\"type\":\"expense\",\"category\":\"food\",\"date\":\"2026-04-04T17:59:06.173Z\",\"notes\":\"Bought groceries\",\"createdAt\":\"2026-04-04T17:59:06.204Z\",\"updatedAt\":\"2026-04-04T17:59:06.204Z\"},{\"_id\":\"69cf9d77eac040c9f4bbac4b\",\"user\":\"69ce1b3e095bab1e9882fd71\",\"amount\":200,\"type\":\"expense\",\"category\":\"food\",\"date\":\"2026-04-03T10:59:03.917Z\",\"notes\":\"Lunch expense\",\"createdAt\":\"2026-04-03T10:59:03.926Z\",\"updatedAt\":\"2026-04-03T10:59:03.926Z\"},{\"_id\":\"69cf9b038533e9245cc402b7\",\"user\":\"69ce1b3e095bab1e9882fd71\",\"amount\":2000,\"type\":\"income\",\"category\":\"salary\",\"date\":\"2026-04-03T10:48:35.151Z\",\"notes\":\"Freelance payment\",\"createdAt\":\"2026-04-03T10:48:35.168Z\",\"updatedAt\":\"2026-04-03T10:48:35.168Z\"},{\"_id\":\"69ce7d132226e8c1c8ab27d1\",\"user\":\"69ce1b3e095bab1e9882fd71\",\"amount\":10000,\"type\":\"income\",\"category\":\"salary\",\"date\":\"2026-04-02T14:28:35.254Z\",\"notes\":\"Monthly salary\",\"createdAt\":\"2026-04-02T14:28:35.268Z\",\"updatedAt\":\"2026-04-02T14:28:35.268Z\"},{\"_id\":\"69ce74c8f1fd65f7789f5085\",\"user\":\"69ce1b3e095bab1e9882fd71\",\"amount\":40000,\"type\":\"income\",\"category\":\"salary\",\"date\":\"2026-04-02T13:53:12.227Z\",\"notes\":\"Annual bonus\",\"createdAt\":\"2026-04-02T13:53:12.236Z\",\"updatedAt\":\"2026-04-02T13:53:12.236Z\"}]}"
-        },
-        {
-          "name": "401 Unauthorized - Missing or Expired Token",
-          "originalRequest": {
-            "method": "GET",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"amount\": 45000,\n  \"type\": \"income\",\n  \"category\": \"salary\",\n  \"notes\": \"Updated April 2026 salary after increment\",\n  \"date\": \"2026-04-01\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{base_url}}/api/dashboard/recent?limit=5",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "dashboard",
-                "recent"
-              ],
-              "query": [
-                {
-                  "key": "limit",
-                  "value": "5",
-                  "type": "text"
-                }
-              ]
-            }
-          },
-          "status": "Unauthorized",
-          "code": 401,
-          "_postman_previewlanguage": "json",
-          "header": [],
-          "cookie": [],
-          "body": "{\"message\":\"Not authenticated. Please log in.\"}"
-        },
-        {
-          "name": "400 Bad Request - Invalid Query Parameter",
-          "originalRequest": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Cookie",
-                "value": "token={{jwt_token}}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"amount\": 45000,\n  \"type\": \"income\",\n  \"category\": \"salary\",\n  \"notes\": \"Updated April 2026 salary after increment\",\n  \"date\": \"2026-04-01\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{base_url}}/api/dashboard/recent?limit=abc",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "dashboard",
-                "recent"
-              ],
-              "query": [
-                {
-                  "key": "limit",
-                  "value": "abc",
-                  "type": "text"
-                }
-              ]
-            }
-          },
-          "status": "Bad Request",
-          "code": 400,
-          "_postman_previewlanguage": "json",
-          "header": [
-            {
-              "key": "Cookie",
-              "value": "token={{jwt_token}}",
-              "description": "",
-              "enabled": true
-            }
-          ],
-          "cookie": [],
-          "body": "{\"message\":\"Invalid query parameter. 'limit' must be a positive integer between 1 and 20.\"}"
-        },
-        {
-          "name": "500 Internal Server Error",
-          "originalRequest": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Cookie",
-                "value": "token={{jwt_token}}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"amount\": 45000,\n  \"type\": \"income\",\n  \"category\": \"salary\",\n  \"notes\": \"Updated April 2026 salary after increment\",\n  \"date\": \"2026-04-01\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{base_url}}/api/dashboard/recent?limit=5",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "dashboard",
-                "recent"
-              ],
-              "query": [
-                {
-                  "key": "limit",
-                  "value": "5",
-                  "type": "text"
-                }
-              ]
-            }
-          },
-          "status": "Internal Server Error",
-          "code": 500,
-          "_postman_previewlanguage": "json",
-          "header": [
-            {
-              "key": "Cookie",
-              "value": "token={{jwt_token}}",
-              "description": "",
-              "enabled": true
-            }
-          ],
-          "cookie": [],
-          "body": "{\"message\":\"Internal server error. Please try again later.\"}"
-        }
-      ]
     }
   ]
 }
