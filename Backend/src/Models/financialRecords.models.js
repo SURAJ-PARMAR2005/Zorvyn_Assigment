@@ -35,7 +35,6 @@ const financialRecordsSchema = new mongoose.Schema({
     default : false,
     select : false,
    }
-
 },
 {
     timestamps : true,
