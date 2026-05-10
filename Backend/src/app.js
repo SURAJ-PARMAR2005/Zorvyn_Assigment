@@ -5,7 +5,12 @@ const morgan = require("morgan");
 const userRoutes = require("../src/Routes/user.routes");
 const recordRoutes = require("../src/Routes/records.routes");
 const dashBoardRoutes = require("../src/Routes/dashboard.routes")
+const cors = require("cors");
 const app  = express();
+app.use(cors({
+    origin: "http://localhost:3000",
+}
+));
 app.use(express.json());
 app.use(cookieparser());
 app.use(morgan("dev"));
